@@ -1,0 +1,22 @@
+name: rw_custom_reusable_widgets
+description: A demo project for audio_widget
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.2.2 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  stacked: ^1.6.0
+  audioplayers: ^0.15.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/audio/
