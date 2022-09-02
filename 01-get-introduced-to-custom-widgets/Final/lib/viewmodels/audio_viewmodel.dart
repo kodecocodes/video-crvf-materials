@@ -39,6 +39,9 @@ import 'package:flutter/foundation.dart';
 import 'package:audioplayers/audioplayers.dart';
 
 class AudioViewModel extends ChangeNotifier {
+  // Create an AudioPlayer instance. As per the new audio player package, you
+  // need to initialise the audio player before it can be used. This is
+  // to prevent the audio player from being null.
   final AudioPlayer _player = AudioPlayer();
 
   bool _isPlaying = false;
@@ -52,8 +55,13 @@ class AudioViewModel extends ChangeNotifier {
   Duration get totalTime => _totalTime;
 
   Future loadData(String audioUrl) async {
+    // You cannot use player to play from audio cache. You can play audio
+    // directly from the audio player initialised above.
+    // You have to use AssestSource as you are using name from the assest
     await _player.play(AssetSource(audioUrl));
-    _isPlaying = true;
+    // Here the flag isPlaying is set to true, so that when the audio is
+    // playing the play button is replaced by pause button.
+    // and rest of the code is executed.
     notifyListeners();
     var stream;
     stream = _player.onDurationChanged.listen((Duration d) {
@@ -95,10 +103,5 @@ class AudioViewModel extends ChangeNotifier {
 
   void seek(Duration position) async {
     await _player.seek(position);
-  }
-
-  void dispose() {
-    _player.dispose();
-    super.dispose();
   }
 }

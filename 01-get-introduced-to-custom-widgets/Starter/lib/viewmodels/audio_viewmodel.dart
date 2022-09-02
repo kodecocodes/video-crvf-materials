@@ -78,7 +78,7 @@ class AudioViewModel extends ChangeNotifier {
       // print(position);
       if (position.compareTo(_totalTime) >= 0) {
         _player.stop();
-        _currentTime = Duration();
+        _currentTime = const Duration();
         _isPlaying = false;
       } else {
         _currentTime = position;
@@ -89,7 +89,7 @@ class AudioViewModel extends ChangeNotifier {
     _player.onPlayerStateChanged.listen((PlayerState s) {
       if (s == PlayerState.completed) {
         _isPlaying = false;
-        _currentTime = Duration();
+        _currentTime = const Duration();
         notifyListeners();
       }
     });

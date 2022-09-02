@@ -2,21 +2,24 @@ import 'package:flutter/material.dart';
 import '../models/episode.dart';
 import '../widgets/episode_card.dart';
 
-// sdk: ">=2.2.0 <3.0.0"
 class HomeScreen extends StatelessWidget {
+  // Add default class constructor with key parameter, it is requred for every
+  // widget. This constructor is used to construct the widget instance.
+  
+  const HomeScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("YogaCast"),
+        title: const Text('YogaCast'),
         actions: [
           IconButton(
-            icon: Icon(Icons.info_outline),
+            icon: const Icon(Icons.info_outline),
             tooltip: 'Open About Screen',
             onPressed: () {
               Navigator.pushNamed(
                 context,
-                "/about",
+                '/about',
               );
             },
           ),

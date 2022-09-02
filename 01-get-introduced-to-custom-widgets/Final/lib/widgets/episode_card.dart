@@ -14,7 +14,7 @@ class EpisodeCard extends StatelessWidget {
     return GestureDetector(
       onTap: () => Navigator.pushNamed(
         context,
-        "/episode",
+        '/episode',
         arguments: episode,
       ),
       child: Container(
@@ -26,7 +26,7 @@ class EpisodeCard extends StatelessWidget {
               color: Colors.grey.withOpacity(0.5),
               spreadRadius: 3,
               blurRadius: 5,
-              offset: Offset(0, 3),
+              offset: const Offset(0, 3),
             ),
           ],
         ),

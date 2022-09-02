@@ -4,9 +4,14 @@ import '../models/episode.dart';
 class EpisodeCard extends StatelessWidget {
   final Episode episode;
 
+
+    // As per the new flutter update the parameter which are not required must 
+    // be passed as optional parameter. This is done to avoid the error.
+    // To make an argument optional use the "?" symbol.
+
   const EpisodeCard({
-    Key key,
-    @required this.episode,
+    Key? key,
+    required this.episode,
   }) : super(key: key);
 
   @override
@@ -14,7 +19,7 @@ class EpisodeCard extends StatelessWidget {
     return GestureDetector(
       onTap: () => Navigator.pushNamed(
         context,
-        "/episode",
+        '/episode',
         arguments: episode,
       ),
       child: Container(
@@ -26,7 +31,7 @@ class EpisodeCard extends StatelessWidget {
               color: Colors.grey.withOpacity(0.5),
               spreadRadius: 3,
               blurRadius: 5,
-              offset: Offset(0, 3),
+              offset: const Offset(0, 3),
             ),
           ],
         ),

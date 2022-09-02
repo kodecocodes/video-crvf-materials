@@ -11,15 +11,15 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("YogaCast"),
+        title: const Text('YogaCast'),
         actions: [
           IconButton(
-            icon: Icon(Icons.info_outline),
+            icon: const Icon(Icons.info_outline),
             tooltip: 'Open About Screen',
             onPressed: () {
               Navigator.pushNamed(
                 context,
-                "/about",
+                '/about',
               );
             },
           ),

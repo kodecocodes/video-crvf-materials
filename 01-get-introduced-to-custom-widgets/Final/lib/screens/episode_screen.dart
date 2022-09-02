@@ -4,6 +4,10 @@ import '../viewmodels/audio_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
 class EpisodeScreen extends StatelessWidget {
+
+    // Add default class constructor with key parameter, it is requred for every
+  // widget. This constructor is used to construct the widget instance.
+  const EpisodeScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     // over here as per the latest Flutter version, varibales which are decalred
@@ -13,7 +17,7 @@ class EpisodeScreen extends StatelessWidget {
     final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text("Episode Title"),
+        title: const Text('Episode Title'),
       ),
       body: ListView(
         padding: const EdgeInsets.all(16),
@@ -22,9 +26,9 @@ class EpisodeScreen extends StatelessWidget {
             episode.title,
             style: theme.textTheme.headline4,
           ),
-          SizedBox(height: 32),
+          const SizedBox(height: 32),
           AudioPlayer(audioUrl: episode.audioUrl),
-          SizedBox(height: 32),
+          const SizedBox(height: 32),
           Text(
             episode.description,
             style: theme.textTheme.subtitle1,
@@ -34,7 +38,7 @@ class EpisodeScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Top Episodes",
+                'Top Episodes',
                 style: theme.textTheme.headline6,
               ),
             ],
