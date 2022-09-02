@@ -3,14 +3,17 @@ import '../models/episode.dart';
 
 class EpisodeCard extends StatelessWidget {
   final Episode episode;
+  final bool isWideCard;
 
   const EpisodeCard({
     Key? key,
-    required this.episode,
+    required this.episode, this.isWideCard = false,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
+    final isLandscape = mediaQuery.orientation == Orientation.landscape;
     return GestureDetector(
       onTap: () => Navigator.pushNamed(
         context,
@@ -18,6 +21,7 @@ class EpisodeCard extends StatelessWidget {
         arguments: episode,
       ),
       child: Container(
+        width: isWideCard ? 350 : mediaQuery.size.width,
         margin: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: Colors.grey,
@@ -31,7 +35,9 @@ class EpisodeCard extends StatelessWidget {
           ],
         ),
         // child: TallCard(episode: episode),
-        child: WideCard(episode: episode),
+        child: isLandscape || isWideCard
+            ? WideCard(episode: episode)
+            : TallCard(episode: episode),
       ),
     );
   }
@@ -51,9 +57,9 @@ class TallCard extends StatelessWidget {
       children: [
         Stack(
           children: [
-             const SizedBox(
+            const SizedBox(
               height: 200,
-              child:  Icon(Icons.mic, size: 64),
+              child: Icon(Icons.mic, size: 64),
             )
           ],
         ),

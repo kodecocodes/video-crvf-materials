@@ -6,18 +6,18 @@ class EpisodeCard extends StatelessWidget {
   final bool isWideCard;
 
   const EpisodeCard({
-    Key key,
-    @required this.episode, this.isWideCard = false,
+    Key? key,
+    required this.episode, this.isWideCard = false,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    var mediaQuery = MediaQuery.of(context);
-    bool isLandscape = mediaQuery.orientation == Orientation.landscape;
+    final mediaQuery = MediaQuery.of(context);
+    final isLandscape = mediaQuery.orientation == Orientation.landscape;
     return GestureDetector(
       onTap: () => Navigator.pushNamed(
         context,
-        "/episode",
+        '/episode',
         arguments: episode,
       ),
       child: Container(
@@ -30,7 +30,7 @@ class EpisodeCard extends StatelessWidget {
               color: Colors.grey.withOpacity(0.5),
               spreadRadius: 3,
               blurRadius: 5,
-              offset: Offset(0, 3),
+              offset: const Offset(0, 3),
             ),
           ],
         ),
@@ -45,8 +45,8 @@ class EpisodeCard extends StatelessWidget {
 
 class TallCard extends StatelessWidget {
   const TallCard({
-    Key key,
-    @required this.episode,
+    Key ?key,
+    required this.episode,
   }) : super(key: key);
 
   final Episode episode;
@@ -57,7 +57,7 @@ class TallCard extends StatelessWidget {
       children: [
         Stack(
           children: [
-            Container(
+            const SizedBox(
               height: 200,
               child: Icon(Icons.mic, size: 64),
             )
@@ -71,8 +71,8 @@ class TallCard extends StatelessWidget {
 
 class WideCard extends StatelessWidget {
   const WideCard({
-    Key key,
-    @required this.episode,
+    Key? key,
+    required this.episode,
   }) : super(key: key);
 
   final Episode episode;
@@ -83,7 +83,7 @@ class WideCard extends StatelessWidget {
       children: [
         Stack(
           children: [
-            Container(
+            const SizedBox(
               height: 120,
               width: 100,
               child: Icon(Icons.mic, size: 64),
@@ -98,8 +98,8 @@ class WideCard extends StatelessWidget {
 
 class CardDetail extends StatelessWidget {
   const CardDetail({
-    Key key,
-    @required this.episode,
+    Key? key,
+    required this.episode,
   }) : super(key: key);
 
   final Episode episode;
@@ -122,9 +122,9 @@ class CardDetail extends StatelessWidget {
           ),
           Row(
             children: [
-              Text("Host: ${episode.host}"),
-              Spacer(),
-              Text("Episode: ${episode.id}"),
+              Text('Host: ${episode.host}'),
+              const Spacer(),
+              Text('Episode: ${episode.id}'),
             ],
           ),
         ],

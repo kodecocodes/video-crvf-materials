@@ -5,13 +5,20 @@ import '../viewmodels/audio_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
 class EpisodeScreen extends StatelessWidget {
+  // Add default class constructor with key parameter, it is requred for every
+  // widget. This constructor is used to construct the widget instance.
+  const EpisodeScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    final Episode episode = ModalRoute.of(context).settings.arguments;
+    // over here as per the latest Flutter version, varibales which are decalred
+    // locally are not required to have a type.
+    // Also "!" operator is required to make sure the variable is not null.
+    final episode = ModalRoute.of(context)!.settings.arguments as Episode;
     final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text("Episode Title"),
+        title: const Text('Episode Title'),
       ),
       body: ListView(
         padding: const EdgeInsets.all(16),
@@ -20,31 +27,31 @@ class EpisodeScreen extends StatelessWidget {
             episode.title,
             style: theme.textTheme.headline4,
           ),
-          SizedBox(height: 32),
+          const SizedBox(height: 32),
           AudioPlayer(audioUrl: episode.audioUrl),
-          SizedBox(height: 32),
+          const SizedBox(height: 32),
           Text(
             episode.description,
             style: theme.textTheme.subtitle1,
           ),
-          SizedBox(height: 32),
+          const SizedBox(height: 32),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Top Episodes",
+                'Top Episodes',
                 style: theme.textTheme.headline6,
               ),
-              Container(
+              SizedBox(
                 height: 150,
                 child: ListView(
                   scrollDirection: Axis.horizontal,
                   children: [
                     ...episodes
                         .map((Episode e) => EpisodeCard(
-                      episode: e,
-                      isWideCard: true,
-                    ))
+                              episode: e,
+                              isWideCard: true,
+                            ))
                         .toList()
                   ],
                 ),
@@ -60,7 +67,7 @@ class EpisodeScreen extends StatelessWidget {
 class AudioPlayer extends StatelessWidget {
   final String audioUrl;
 
-  const AudioPlayer({Key key, @required this.audioUrl}) : super(key: key);
+  const AudioPlayer({Key? key, required this.audioUrl}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
