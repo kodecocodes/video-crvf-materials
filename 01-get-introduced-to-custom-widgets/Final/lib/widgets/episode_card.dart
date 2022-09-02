@@ -5,8 +5,8 @@ class EpisodeCard extends StatelessWidget {
   final Episode episode;
 
   const EpisodeCard({
-    Key key,
-    @required this.episode,
+    Key? key,
+    required this.episode,
   }) : super(key: key);
 
   @override

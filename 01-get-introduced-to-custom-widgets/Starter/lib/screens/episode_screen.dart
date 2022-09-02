@@ -1,16 +1,57 @@
+// Copyright (c) 2022 Razeware LLC
+//
+// Permission is hereby granted, free of charge, to any person
+// obtaining a copy of this software and associated documentation
+// files (the "Software"), to deal in the Software without
+// restriction, including without limitation the rights to use,
+//     copy, modify, merge, publish, distribute, sublicense, and/or
+// sell copies of the Software, and to permit persons to whom
+// the Software is furnished to do so, subject to the following
+// conditions:
+//
+// The above copyright notice and this permission notice shall be
+// included in all copies or substantial portions of the Software.
+//
+// Notwithstanding the foregoing, you may not use, copy, modify,
+//     merge, publish, distribute, sublicense, create a derivative work,
+// and/or sell copies of the Software in any work that is designed,
+// intended, or marketed for pedagogical or instructional purposes
+// related to programming, coding, application development, or
+// information technology. Permission for such use, copying,
+//    modification, merger, publication, distribution, sublicensing,
+//    creation of derivative works, or sale is expressly withheld.
+//
+// This project and source code may use libraries or frameworks
+// that are released under various Open-Source licenses. Use of
+// those libraries and frameworks are governed by their own
+// individual licenses.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+// HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+// WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+// DEALINGS IN THE SOFTWARE.
+
 import 'package:flutter/material.dart';
 import '../models/episode.dart';
 import '../viewmodels/audio_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
 class EpisodeScreen extends StatelessWidget {
+  // Add default class constructor with key parameter, it is requred for every
+  // widget. This constructor is used to construct the widget instance.
+  const EpisodeScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    final Episode episode = ModalRoute.of(context).settings.arguments;
+    final episode = ModalRoute.of(context)!.settings.arguments as Episode;
     final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text("Episode Title"),
+        title: const Text('Episode Title'),
       ),
       body: ListView(
         padding: const EdgeInsets.all(16),
@@ -19,19 +60,19 @@ class EpisodeScreen extends StatelessWidget {
             episode.title,
             style: theme.textTheme.headline4,
           ),
-          SizedBox(height: 32),
+          const SizedBox(height: 32),
           AudioPlayer(audioUrl: episode.audioUrl),
-          SizedBox(height: 32),
+          const SizedBox(height: 32),
           Text(
             episode.description,
             style: theme.textTheme.subtitle1,
           ),
-          SizedBox(height: 32),
+          const SizedBox(height: 32),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Top Episodes",
+                'Top Episodes',
                 style: theme.textTheme.headline6,
               ),
             ],
@@ -45,7 +86,7 @@ class EpisodeScreen extends StatelessWidget {
 class AudioPlayer extends StatelessWidget {
   final String audioUrl;
 
-  const AudioPlayer({Key key, @required this.audioUrl}) : super(key: key);
+  const AudioPlayer({Key? key, required this.audioUrl}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

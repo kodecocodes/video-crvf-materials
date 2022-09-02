@@ -36,16 +36,14 @@
 // DEALINGS IN THE SOFTWARE.
 
 import 'package:flutter/foundation.dart';
-import 'package:audioplayers/audio_cache.dart';
 import 'package:audioplayers/audioplayers.dart';
 
 class AudioViewModel extends ChangeNotifier {
-  static AudioCache _audioCache = AudioCache();
-  AudioPlayer _player;
+  final AudioPlayer _player = AudioPlayer();
 
   bool _isPlaying = false;
-  Duration _currentTime = Duration();
-  Duration _totalTime = Duration(milliseconds: 1);
+  Duration _currentTime = const Duration();
+  Duration _totalTime = const Duration(seconds: 5);
 
   bool get isPlaying => _isPlaying;
 
@@ -54,9 +52,9 @@ class AudioViewModel extends ChangeNotifier {
   Duration get totalTime => _totalTime;
 
   Future loadData(String audioUrl) async {
-    // _player = await _audioCache.play('furelise.mp3');
-    _player = await _audioCache.play(audioUrl);
-
+    await _player.play(AssetSource(audioUrl));
+    _isPlaying = true;
+    notifyListeners();
     var stream;
     stream = _player.onDurationChanged.listen((Duration d) {
       _totalTime = d;
@@ -65,8 +63,7 @@ class AudioViewModel extends ChangeNotifier {
       notifyListeners();
     });
 
-    _player.onAudioPositionChanged.listen((Duration position) {
-      // print(position);
+    _player.onPositionChanged.listen((Duration position) {
       if (position.compareTo(_totalTime) >= 0) {
         _player.stop();
         _currentTime = Duration();
@@ -77,8 +74,8 @@ class AudioViewModel extends ChangeNotifier {
       notifyListeners();
     });
 
-    _player.onPlayerStateChanged.listen((AudioPlayerState s) {
-      if (s == AudioPlayerState.COMPLETED) {
+    _player.onPlayerStateChanged.listen((PlayerState s) {
+      if (s == PlayerState.completed) {
         _isPlaying = false;
         _currentTime = Duration();
         notifyListeners();
@@ -98,5 +95,10 @@ class AudioViewModel extends ChangeNotifier {
 
   void seek(Duration position) async {
     await _player.seek(position);
+  }
+
+  void dispose() {
+    _player.dispose();
+    super.dispose();
   }
 }

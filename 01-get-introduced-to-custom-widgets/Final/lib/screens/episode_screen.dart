@@ -6,7 +6,10 @@ import 'package:stacked/stacked.dart';
 class EpisodeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final Episode episode = ModalRoute.of(context).settings.arguments;
+    // over here as per the latest Flutter version, varibales which are decalred
+    // locally are not required to have a type. 
+    // Also "!" operator is required to make sure the variable is not null.
+    final episode = ModalRoute.of(context)!.settings.arguments as Episode;
     final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
@@ -45,7 +48,7 @@ class EpisodeScreen extends StatelessWidget {
 class AudioPlayer extends StatelessWidget {
   final String audioUrl;
 
-  const AudioPlayer({Key key, @required this.audioUrl}) : super(key: key);
+  const AudioPlayer({Key? key, required this.audioUrl}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
