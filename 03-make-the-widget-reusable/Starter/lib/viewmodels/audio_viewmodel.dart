@@ -1,4 +1,4 @@
-// Copyright (c) 2020 Razeware LLC
+// Copyright (c) 2022 Razeware LLC
 //
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -36,16 +36,18 @@
 // DEALINGS IN THE SOFTWARE.
 
 import 'package:flutter/foundation.dart';
-import 'package:audioplayers/audio_cache.dart';
 import 'package:audioplayers/audioplayers.dart';
 
 class AudioViewModel extends ChangeNotifier {
-  static AudioCache _audioCache = AudioCache();
-  AudioPlayer _player;
+  // Create an AudioPlayer instance. As per the new audio player package, you 
+  // need to initialise the audio player before it can be used. This is 
+  // to prevent the audio player from being null.
+  final AudioPlayer _player = AudioPlayer();
+
 
   bool _isPlaying = false;
-  Duration _currentTime = Duration();
-  Duration _totalTime = Duration(milliseconds: 1);
+  Duration _currentTime = const Duration();
+  Duration _totalTime = const Duration(milliseconds: 1);
 
   bool get isPlaying => _isPlaying;
 
@@ -55,7 +57,14 @@ class AudioViewModel extends ChangeNotifier {
 
   Future loadData(String audioUrl) async {
     // _player = await _audioCache.play('furelise.mp3');
-    _player = await _audioCache.play(audioUrl);
+    // You cannot use player to play from audio cache. You can play audio
+    // directly from the audio player initialised above. 
+    // You have to use AssestSource as you are using name from the assest
+    await _player.play(AssetSource(audioUrl));
+    // Here the flag isPlaying is set to true, so that when the audio is 
+    // playing the play button is replaced by pause button.
+    // and rest of the code is executed.
+    _isPlaying = true;
 
     var stream;
     stream = _player.onDurationChanged.listen((Duration d) {
@@ -65,7 +74,7 @@ class AudioViewModel extends ChangeNotifier {
       notifyListeners();
     });
 
-    _player.onAudioPositionChanged.listen((Duration position) {
+    _player.onPositionChanged.listen((Duration position) {
       // print(position);
       if (position.compareTo(_totalTime) >= 0) {
         _player.stop();
@@ -77,8 +86,8 @@ class AudioViewModel extends ChangeNotifier {
       notifyListeners();
     });
 
-    _player.onPlayerStateChanged.listen((AudioPlayerState s) {
-      if (s == AudioPlayerState.COMPLETED) {
+    _player.onPlayerStateChanged.listen((PlayerState s) {
+      if (s == PlayerState.completed) {
         _isPlaying = false;
         _currentTime = Duration();
         notifyListeners();

@@ -1,4 +1,4 @@
-// Copyright (c) 2020 Razeware LLC
+// Copyright (c) 2022 Razeware LLC
 //
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -36,22 +36,24 @@
 // DEALINGS IN THE SOFTWARE.
 
 import 'package:flutter/material.dart';
-
 import 'screens/about_screen.dart';
 import 'screens/episode_screen.dart';
 import 'screens/home_screen.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
+  // Add default class constructor with key parameter, it is requred for every
+  // widget. This constructor is used to construct the widget instance.
+  const MyApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       routes: {
-        '/': (context) => HomeScreen(),
-        '/episode': (context) => EpisodeScreen(),
-        '/about': (context) => AboutScreen(),
+        '/': (context) => const HomeScreen(),
+        '/episode': (context) => const EpisodeScreen(),
+        '/about': (context) => const AboutScreen(),
       },
     );
   }
