@@ -1,21 +1,49 @@
+// Copyright (c) 2022 Razeware LLC
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// Notwithstanding the foregoing, you may not use, copy, modify, merge, publish,
+// distribute, sublicense, create a derivative work, and/or sell copies of the
+// Software in any work that is designed, intended or marketed for pedagogical
+// or instructional purposes related to programming, coding, application
+// development, or information technology.  Permission for such use, copying,
+// modification, merger, publication, distribution, sublicensing, creation of
+// derivative works or sale is expressly withheld.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
 class AudioWidget extends StatefulWidget {
-  final bool isPlaying;
-  final ValueChanged<bool> onPlayStateChanged;
-  final Duration currentTime;
-  final ValueChanged<Duration> onSeekBarMoved;
+  final bool? isPlaying;
+  final ValueChanged<bool>? onPlayStateChanged;
+  final Duration? currentTime;
+  final ValueChanged<Duration>? onSeekBarMoved;
   final Duration totalTime;
 
   const AudioWidget({
-    Key key,
+    Key? key,
     this.isPlaying = false,
     this.onPlayStateChanged,
     this.currentTime,
     this.onSeekBarMoved,
-    @required this.totalTime,
+    required this.totalTime,
   }) : super(key: key);
 
   @override
@@ -23,8 +51,8 @@ class AudioWidget extends StatefulWidget {
 }
 
 class _AudioWidgetState extends State<AudioWidget> {
-  double _sliderValue;
-  bool _userIsMovingSlider;
+  double? _sliderValue;
+  bool? _userIsMovingSlider;
 
   @override
   void initState() {
@@ -37,7 +65,7 @@ class _AudioWidgetState extends State<AudioWidget> {
     if (widget.currentTime == null) {
       return 0;
     }
-    return widget.currentTime.inMilliseconds / widget.totalTime.inMilliseconds;
+    return widget.currentTime!.inMilliseconds / widget.totalTime.inMilliseconds;
   }
 
   Duration _getCurrentDuration(double sliderValue) {
@@ -49,8 +77,8 @@ class _AudioWidgetState extends State<AudioWidget> {
     final time = _getCurrentDuration(sliderValue);
 
     String twoDigits(int n) {
-      if (n >= 10) return "$n";
-      return "0$n";
+      if (n >= 10) return '$n';
+      return '0$n';
     }
 
     final minutes =
@@ -59,12 +87,12 @@ class _AudioWidgetState extends State<AudioWidget> {
         twoDigits(time.inSeconds.remainder(Duration.secondsPerMinute));
 
     final hours = widget.totalTime.inHours > 0 ? '${time.inHours}:' : '';
-    return "$hours$minutes:$seconds";
+    return '$hours$minutes:$seconds';
   }
 
   @override
   Widget build(BuildContext context) {
-    if (!_userIsMovingSlider) {
+    if (!_userIsMovingSlider!) {
       _sliderValue = _getSliderValue();
     }
     return Container(
@@ -76,7 +104,7 @@ class _AudioWidgetState extends State<AudioWidget> {
           _buildCurrentTimeLabel(),
           _buildSeekBar(context),
           _buildTotalTimeLabel(),
-          SizedBox(width: 16),
+          const SizedBox(width: 16),
         ],
       ),
     );
@@ -85,8 +113,8 @@ class _AudioWidgetState extends State<AudioWidget> {
   Text _buildTotalTimeLabel() => Text(_getTimeString(1.0));
 
   Text _buildCurrentTimeLabel() => Text(
-        _getTimeString(_sliderValue),
-        style: TextStyle(
+        _getTimeString(_sliderValue!),
+        style: const TextStyle(
           fontFeatures: [FontFeature.tabularFigures()],
         ),
       );
@@ -94,8 +122,8 @@ class _AudioWidgetState extends State<AudioWidget> {
   Expanded _buildSeekBar(BuildContext context) {
     return Expanded(
       child: Slider(
-        value: _sliderValue,
-        activeColor: Theme.of(context).textTheme.bodyText2.color,
+        value: _sliderValue!,
+        activeColor: Theme.of(context).textTheme.bodyText2!.color,
         inactiveColor: Theme.of(context).disabledColor,
         onChangeStart: (value) {
           _userIsMovingSlider = true;
@@ -107,21 +135,18 @@ class _AudioWidgetState extends State<AudioWidget> {
         },
         onChangeEnd: (value) {
           _userIsMovingSlider = false;
-          if (widget.onSeekBarMoved != null) {
-            final currentTime = _getCurrentDuration(value);
-            widget.onSeekBarMoved(currentTime);
-          }
+          final currentTime = _getCurrentDuration(value);
+          widget.onSeekBarMoved!(currentTime);
         },
       ),
     );
   }
 
   IconButton _buildPlayPauseButton() => IconButton(
-        icon: (widget.isPlaying) ? Icon(Icons.pause) : Icon(Icons.play_arrow),
+        icon: (widget.isPlaying!) ? const Icon(Icons.pause) 
+        : const Icon(Icons.play_arrow),
         onPressed: () {
-          if (widget.onPlayStateChanged != null) {
-            widget.onPlayStateChanged(!widget.isPlaying);
-          }
+          widget.onPlayStateChanged!(!widget.isPlaying!);
         },
       );
 }
