@@ -48,6 +48,7 @@ class _AudioWidgetState extends State<AudioWidget> {
   String _getTimeString(double sliderValue) {
     final time = _getCurrentDuration(sliderValue);
 
+    // Use signgle quotes for strings.
     String twoDigits(int n) {
       if (n >= 10) return '$n';
       return '0$n';
@@ -59,6 +60,7 @@ class _AudioWidgetState extends State<AudioWidget> {
         twoDigits(time.inSeconds.remainder(Duration.secondsPerMinute));
 
     final hours = widget.totalTime.inHours > 0 ? '${time.inHours}:' : '';
+    // Use signgle quotes for strings.
     return '$hours$minutes:$seconds';
   }
 

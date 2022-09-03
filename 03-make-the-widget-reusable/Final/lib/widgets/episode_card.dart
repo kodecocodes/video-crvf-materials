@@ -26,7 +26,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-
 import 'package:flutter/material.dart';
 import '../models/episode.dart';
 
@@ -36,11 +35,15 @@ class EpisodeCard extends StatelessWidget {
 
   const EpisodeCard({
     Key? key,
-    required this.episode, this.isWideCard = false,
+    required this.episode,
+    this.isWideCard = false,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    // As per the new lint rule by Flutter. There is no need mention the type of
+    // the variable if the varibale is locally declared. Also final keyword is
+    // used if the variable wont be reassigned.
     final mediaQuery = MediaQuery.of(context);
     final isLandscape = mediaQuery.orientation == Orientation.landscape;
     return GestureDetector(

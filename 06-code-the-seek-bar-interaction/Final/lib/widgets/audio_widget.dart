@@ -21,6 +21,10 @@ class AudioWidget extends StatefulWidget {
 }
 
 class _AudioWidgetState extends State<AudioWidget> {
+// The values should be initialised when they are declared.
+// If you not initialising them here, you can initialise them in the initState() method.
+// Right now to create a variable without the value it can either be an optional
+// or a late variable. We are using optional variable here.
   double? _sliderValue;
   bool? _userIsMovingSlider;
 

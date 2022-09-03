@@ -29,6 +29,13 @@
 import 'package:flutter/material.dart';
 
 class AudioWidget extends StatefulWidget {
+  // As per the Flutter lint rules the final varibalbes should be initialized.
+// That is why they are initialised in the constructor.
+// The constructor is called when the widget is created.
+// The parameter can either be required or optional.
+// The required keyword is used to make the parameter required.
+// And "?" is used to make the parameter optional.
+
   final bool? isPlaying;
   final ValueChanged<bool>? onPlayStateChanged;
   final Duration? currentTime;
@@ -78,6 +85,11 @@ class _AudioWidgetState extends State<AudioWidget> {
             ? const Icon(Icons.pause)
             : const Icon(Icons.play_arrow),
         onPressed: () {
+          // TO use optional parameters we need to check if they are null or not.
+          // We are using if else case to check if the value is null or not.
+          // We need to use bang operator "!" with the optional value
+          // To tell the compiler that we are sure that the value is not null.
+          // If this value is found null, you code will break.
           if (widget.onPlayStateChanged != null) {
             widget.onPlayStateChanged!(!widget.isPlaying!);
           }

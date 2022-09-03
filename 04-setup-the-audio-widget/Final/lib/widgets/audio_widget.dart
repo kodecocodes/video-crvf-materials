@@ -26,7 +26,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-
 import 'package:flutter/material.dart';
 
 class AudioWidget extends StatelessWidget {
@@ -41,16 +40,24 @@ class AudioWidget extends StatelessWidget {
       child: Row(
         children: [
           IconButton(icon: const Icon(Icons.play_arrow), onPressed: () {}),
+          // Const keyword is used to create a constant value, be it a variable
+          // or a widget. The Text value is going to remain the same throughout 
+          // the widget's lifecycle. Hence we add a const keyword so that the 
+          // widget is not rebuilt every time.
+          // This helps in improving performance.
+
           const Text('00:37'),
           Expanded(
             child: Slider(
               value: 0.5,
               activeColor: Theme.of(context).textTheme.bodyText2!.color,
               inactiveColor: Theme.of(context).disabledColor,
-              onChanged: (double value) {},
+              onChanged: (value) {},
             ),
           ),
           const Text('01:15'),
+          // SizedBox widget is used to add space between widgets.The value wont
+          // be changesd in the widget's lifecycle so we add a const keyword.
           const SizedBox(width: 16),
         ],
       ),
